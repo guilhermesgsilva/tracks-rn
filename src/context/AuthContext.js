@@ -9,7 +9,14 @@ const authReducer = (state, action) => {
 };
 
 const signup = (dispatch) => {
-  return ({ email, password }) => {};
+  return async ({ email, password }) => {
+    try {
+      const response = await trackerApi.post("/signup", { email, password });
+      console.log("🚀 ~ return ~ response:", response.data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 };
 
 const signin = (dispatch) => {
@@ -22,6 +29,6 @@ const signout = (dispatch) => {
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  {},
+  { signup, signin, signout },
   { isSignedIn: false }
 );
